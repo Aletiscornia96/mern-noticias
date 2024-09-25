@@ -1,7 +1,52 @@
+import { Button, Label, TextInput } from 'flowbite-react';
+import { Link } from "react-router-dom";
+
 export default function SignUp() {
   return (
-    <div>
-      Sign UP
+    <div className='min-h-screen mt-20'>
+      <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5'>
+        <div className='flex-1'>
+          <Link
+            to="/"
+            className="font-bold dark:text-white text-4xl"
+          >
+            <span
+              className="px-2 py-1 bg-gradient-to-r from-indigo-500
+                      via-purcle-500 to-pink-500 rounded-lg text-white"
+            >
+              El Funense
+            </span>
+          </Link>
+          <p className="text-sm mt-5">
+            Esta es una prueba para la pagina de noticias. Podes iniciar sesion cn tu mail o cn un usuario.
+          </p>
+        </div>
+        <div className='flex-1'>
+          <form className='flex flex-col gap-4'>
+            <div>
+              <Label value='Ingrese un nombre'/>
+              <TextInput type='text' placeholder='Nombre de usuario' id='username'/>
+            </div>
+            <div>
+              <Label value='Ingrese un mail'/>
+              <TextInput type='text' placeholder='Correo electronico' id='email'/>
+            </div>
+            <div>
+              <Label value='Ingrese una contrasena'/>
+              <TextInput type='text' placeholder='Contrasena' id='password'/>
+            </div>
+            <Button gradientDuoTone='purpleToPink' type='submit'> 
+              Sign Up
+            </Button>
+          </form>
+          <div className='flex gap-2 text-sm mt-5'>
+            <span>Tienes Cuenta?</span>
+            <Link to='/sign-in' className='text-blue-500'>
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
