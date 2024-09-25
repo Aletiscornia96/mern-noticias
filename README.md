@@ -1,4 +1,4 @@
-#PARA PODER INICIAR LA APP
+# PARA PODER INICIAR LA APP
 Para poder iniciar la app lo primero que debemos ahcer es crear en la raiz un archivo .env con 3 valiables:
 >MONGO_URL
 >PORT
