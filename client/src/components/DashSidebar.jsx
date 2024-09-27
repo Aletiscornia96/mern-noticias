@@ -24,7 +24,7 @@ export default function DashSidebar() {
                             Perfil
                         </Sidebar.Item>
                     </Link>
-                    <Sidebar.Item active icon={HiArrowSmRight} className='cursor-pointer'>
+                    <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer'>
                         Cerrar Sesion
                     </Sidebar.Item>
                 </Sidebar.ItemGroup>
