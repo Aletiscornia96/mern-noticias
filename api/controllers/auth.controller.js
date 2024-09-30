@@ -44,7 +44,7 @@ export const signin = async (req, res, next) => {
         if(!validPassword){
            return next(errorHandler(400, 'Contrasena invalida'));
         }
-        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin}, process.env.JWT_SECRET);
 
         const { password: pass, ...rest } = validUser._doc;
 
@@ -59,26 +59,39 @@ export const google = async (req, res, next) => {
     try {
         const user = await User.findOne({email});
         if(user){
-            const token = jwt.sign({id:user._id}, process.env.JWT_SECRET);
+            //si el usuario existe
+            const token = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.JWT_SECRET);
             const {password, ...rest} = user._doc;
             res.status(200).cookie('access_token', token, {
                 httpOnly: true,
             }).json(rest)
         }else{
+            //si el usuario no existe
             const generatedPassword = Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
             const newUser = new User({
                 username: name.toLowerCase().split(' ').join('') + Math.random().toString(9).slice(-4),
                 email,
                 password: hashedPassword,
                 profilePicture: googlePhotoUrl,
             });
-            await newUser.save();
-            const token = jwt.sign({id:user._id}, process.env.JWT_SECRET);
-            const {password, ...rest} = user._doc;
-            res.status(200).cookie('access_token', token, {
-                httpOnly: true,
-            }).json(rest)
+            try {
+                // Intentar guardar el nuevo usuario
+                await newUser.save();
+
+                // Generar token para el nuevo usuario
+                const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
+                const { password, ...rest } = newUser._doc;
+
+                res.status(200).cookie('access_token', token, {
+                    httpOnly: true,
+                }).json(rest);
+            } catch (saveError) {
+                // Captura cualquier error relacionado con la base de datos
+                console.log('Error al guardar el usuario:', saveError);
+                res.status(500).json({ message: 'Error al guardar el usuario en la base de datos' });
+            }
         }
     } catch (error) {
         next(error)

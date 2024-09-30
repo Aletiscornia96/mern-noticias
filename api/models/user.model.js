@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
     },
 
@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
     },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true } );
 
 const User = mongoose.model('User', userSchema);

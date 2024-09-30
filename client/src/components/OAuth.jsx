@@ -5,13 +5,17 @@ import  app  from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 export default function OAuth() {
     const auth = getAuth(app)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [isAuthenticating, setIsAuthenticating] = useState(false);
     const handleGoogleClick = async () => {
+        if (isAuthenticating) return; // Evitar múltiples clics
+        setIsAuthenticating(true);
         const provider = new GoogleAuthProvider()
         provider.setCustomParameters({ prompt: 'select_account' })
         try {
@@ -39,5 +43,5 @@ export default function OAuth() {
             <AiFillGoogleCircle size={20} className='w-6 g-2 mr-2'/>
             Continuar con Google
         </Button>
-  )
+    )
 }
