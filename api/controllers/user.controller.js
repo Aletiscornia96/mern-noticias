@@ -46,3 +46,24 @@ export const updateUser = async (req, res, next) => {
     }
 
 };
+
+export const deleteUser = async (req, res, next) => {
+    if(req.user.id === req.params.userId){
+        return next(errorHandler(403, 'No tienes permisos para elimidar esta cuenta'));
+    }
+    try {
+        await User.findByIdAndDelete(req.params.userId),
+        res.status(200).json('Cuenta eliminada con exito!'); 
+    } catch (error) {
+        next(error);
+        
+    }
+};
+
+export const signOut = (req, res, next) => {
+    try {
+        res.clearCookie('access_token').status(200).json('Sesion cerrada')
+    } catch (error) {
+        next(error);
+    }
+};
