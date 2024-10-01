@@ -31,7 +31,7 @@ export const getposts = async (req, res, next) => {
             ...(req.query.categody && {category: req.query.category}),
             ...(req.query.slug && {slug: req.query.slug}),
             ...(req.query.postId && {_id: req.query.postId}),
-            ...(req.query.searchTerm && {_id: req.query.postId,
+            ...(req.query.searchTerm && {
                 $or: [
                     {title: {$ragex: req.query.searchTerm, $options: 'i'}},
                     {content: {$ragex: req.query.searchTerm, $options: 'i'}},
@@ -41,14 +41,16 @@ export const getposts = async (req, res, next) => {
 
         const totalPost = await Post.countDocuments();
 
-        const now = new Date(
+        const now = new Date();
+        
+        const oneMonthAgo = new Date(
             now.getFullYear(),
-            now.getMonth(),
+            now.getMonth() - 1,
             now.getDate()
         );
 
         const lasMonthPosts = await Post.countDocuments({
-            createdAt: { $get: oneMonthAgo },
+            createdAt: { $gte: oneMonthAgo },
         });
 
         res.status(200).json({

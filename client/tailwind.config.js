@@ -12,5 +12,6 @@ export default {
   },
   plugins: [
     flowbite.plugin(),
+    require('tailwind-scrollbar'), // Esto debe estar bien en ES Modules
   ],
 }
