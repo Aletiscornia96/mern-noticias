@@ -4,7 +4,7 @@ import  { errorHandler }  from "../utils/error.js"
 
 export const create = async (req, res, next) => {
     if(!req.user.isAdmin){
-        return next(errorHandler(403, 'No tienes permisos para crear un post'));
+        return next(errorHandler(403, 'No tienes permisos para crear una noticia'));
     }
     if(!req.body.title || !req.body.content){
         return next(errorHandler(400, 'Ingrese los campos requeridos'))
@@ -60,6 +60,18 @@ export const getposts = async (req, res, next) => {
         });
 
 
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const deletepost = async (req, res, next) => {
+    if(!req.user.isAdmin || req.user.id !== req.params.userId){
+        return next(errorHandler(403, 'No tienes permisos para eliminar esta noticia'))
+    }
+    try {
+        await Post.findOneAndDelete(req.params.postId);
+        res.status(200).json('La noticia ha sido eliminada');
     } catch (error) {
         next(error);
     }
