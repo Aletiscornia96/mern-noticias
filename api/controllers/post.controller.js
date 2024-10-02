@@ -28,7 +28,7 @@ export const getposts = async (req, res, next) => {
         const sortDirection = req.query.order === 'asc' ? 1 : -1;
         const posts = await Post.find({
             ...(req.query.user_id && {userId: req.query.userId}),
-            ...(req.query.categody && {category: req.query.category}),
+            ...(req.query.category && {category: req.query.category}),
             ...(req.query.slug && {slug: req.query.slug}),
             ...(req.query.postId && {_id: req.query.postId}),
             ...(req.query.searchTerm && {
@@ -72,6 +72,28 @@ export const deletepost = async (req, res, next) => {
     try {
         await Post.findOneAndDelete(req.params.postId);
         res.status(200).json('La noticia ha sido eliminada');
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const updatepost = async (req, res, next) => {
+    if(!req.user.isAdmin || req.user.id !== req.params.userId){
+        return next(errorHandler(403, 'No tienes permitido actualizar esta noticia'));
+    }
+    try {
+        const updatePost = await Post.findByIdAndUpdate(
+            req.params.postId,
+            {
+                $set: {
+                    title: req.body.title,
+                    content: req.body.content,
+                    category: req.body.category,
+                    image: req.body.image,
+                }, 
+            }, { new: true }
+        )
+        res.status(200).json(updatePost);
     } catch (error) {
         next(error);
     }

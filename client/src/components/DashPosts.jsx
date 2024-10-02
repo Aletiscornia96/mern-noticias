@@ -28,7 +28,7 @@ export default function DashPosts() {
       if (currentUser.isAdmin) {
         fetchPosts();
       }
-    }, [currentUser._id])
+    }, [currentUser._id]);
 
     const handleShowMore = async () => {
         const startIndex = userPosts.length;
@@ -84,7 +84,7 @@ export default function DashPosts() {
                         </Table.Head>
                         <Table.Body className='divide-y'>
                             {userPosts.map((post) => (
-                                <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800' key={post.id}> {/* Asegúrate de tener una clave única */}
+                                <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800' key={post._id}> {/* Asegúrate de tener una clave única */}
                                     <Table.Cell>
                                         {new Date(post.updatedAt).toLocaleDateString()}
                                     </Table.Cell>
