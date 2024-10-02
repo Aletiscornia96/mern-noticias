@@ -65,7 +65,7 @@ export const signOut = (req, res, next) => {
 };
 
 export const getUsers = async (req, res, next) => {
-    if(req.user.isAdmin){
+    if(!req.user.isAdmin){
         return next(errorHandler(403, 'No tienes permitido realizar esta accion'));
     }
     try {
@@ -89,14 +89,17 @@ export const getUsers = async (req, res, next) => {
             now.getMonth() -1,
             now.getDate()
         );
+
+        const lastMonthUsers = await User.countDocuments({
+            createdAt: { $gte:oneMonthAgo }
+        });
+
         res.status(200).json({
             users: usersWithoutPassword,
             totalUsers,
             lastMonthUsers
         });
-        const lastMonthUsers = await User.countDocuments({
-            createdAt: { $gte:oneMonthAgo }
-        });
+        
 
     } catch (error) {
         next(error)
