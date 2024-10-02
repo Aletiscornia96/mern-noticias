@@ -1,6 +1,7 @@
-import { Button, ButtonGroup, Spinner } from "flowbite-react";
+import { Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom"
+import CommentSection from "../components/ComemntSection";
 
 
 export default function PostPage() {
@@ -29,6 +30,7 @@ export default function PostPage() {
             } catch (error) {
                 setError(true);
                 setLoading(false)
+                console.log(error)
             }
         }
         fetchPosts();
@@ -38,6 +40,7 @@ export default function PostPage() {
             <Spinner size='xl' />
         </div>
     );
+    if (error) return <div>Error al cargar el post.</div>;
     return(
         <main className='p-3 flex flex-col max-w-6xl mx-auto min-h-screen'>
             <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>{post && post.title}</h1>
@@ -54,6 +57,7 @@ export default function PostPage() {
 
                 </div>
             </div>
+            <CommentSection postId={post._id}/>
         </main>
     )
 }
