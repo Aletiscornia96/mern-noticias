@@ -79,6 +79,13 @@ export default function CommentSection({postId}) {
         }
     }
 
+    const handleEdit = async (comment, editedContent) => {
+        setComments(
+            comments.map((c) =>
+                c._id === comment._id ? {...c, content: editedContent} : c)
+        )
+    }
+
     return(
         <div className='max-w-2xl mx-auto w-full p-3'>
             {currentUser ? 
@@ -104,7 +111,7 @@ export default function CommentSection({postId}) {
                     <Textarea placeholder='Agregar comentario' rows='3' maxLength='200' onChange={(e)=>setcomment(e.target.value)} value={comment}/>
                     <div className='flex justify-between items-center mt-5'>
                         <p className='text-gray-500 text-xs'>{200-comment.length} caracteres restantes</p>
-                        <Button outline radiantDuoTone='purpleToBlue' type='submit'>
+                        <Button outline gradiantduotone='purpleToBlue' type='submit'>
                             Comentar
                         </Button>
                     </div>
@@ -127,7 +134,7 @@ export default function CommentSection({postId}) {
                     </div>
                     {
                         comments.map((comment) => (
-                            <Comment key={comment._id} comment={comment} onLike={handleLike} />
+                            <Comment key={comment._id} comment={comment} onLike={handleLike} onEdit={handleEdit}/>
                         ))
                     }
                 </>
