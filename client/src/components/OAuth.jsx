@@ -14,7 +14,7 @@ export default function OAuth() {
     const navigate = useNavigate()
     const [isAuthenticating, setIsAuthenticating] = useState(false);
     const handleGoogleClick = async () => {
-        if (isAuthenticating) return; // Evitar múltiples clics
+        // if (isAuthenticating) return; // Evitar múltiples clics
         setIsAuthenticating(true);
         const provider = new GoogleAuthProvider()
         provider.setCustomParameters({ prompt: 'select_account' })
