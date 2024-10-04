@@ -130,10 +130,17 @@ export default function Search() {
               value={sidebarData.category}
               id='category'
             >
-              <option value='sincategoria'>Sin categoria</option>
-              <option value='historia'>Histria</option>
-              <option value='deporte'>Deporte</option>
-              <option value='economia'>Economia</option>
+            <option value='Sin Categoria'>Seleccione una categoria</option>
+            <option value='Ciudad'>Ciudad</option>
+            <option value='Cultura'>Cultura</option>
+            <option value='Deporte'>Deporte</option>
+            <option value='Economia'>Economia</option>
+            <option value='Espectaculo'>Espectaculo</option>
+            <option value='Pais'>Pais</option>
+            <option value='Region'>Region</option>
+            <option value='Social'>Social</option>
+            <option value='Tiempo'>Tiempo</option>
+            <option value='Urgente'>Urgente</option>
             </Select>
           </div>
           <Button type='submit' outline gradientDuoTone='purpleToPink'>

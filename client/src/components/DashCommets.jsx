@@ -3,20 +3,21 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
-
 export default function DashComments() {
   const { currentUser } = useSelector((state) => state.user);
   const [comments, setComments] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState('');
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const res = await fetch(`/api/comment/getcomments`);
         const data = await res.json();
         if (res.ok) {
-          setComments(data.comments);
+          const sortedComments = data.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Ordenar de más reciente a más antiguo
+          setComments(sortedComments);
           if (data.comments.length < 9) {
             setShowMore(false);
           }
@@ -33,12 +34,11 @@ export default function DashComments() {
   const handleShowMore = async () => {
     const startIndex = comments.length;
     try {
-      const res = await fetch(
-        `/api/comment/getcomments?startIndex=${startIndex}`
-      );
+      const res = await fetch(`/api/comment/getcomments?startIndex=${startIndex}`);
       const data = await res.json();
       if (res.ok) {
-        setComments((prev) => [...prev, ...data.comments]);
+        const sortedComments = [...comments, ...data.comments].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Mantener el orden al añadir más
+        setComments(sortedComments);
         if (data.comments.length < 9) {
           setShowMore(false);
         }
@@ -51,17 +51,10 @@ export default function DashComments() {
   const handleDeleteComment = async () => {
     setShowModal(false);
     try {
-      const res = await fetch(
-        `/api/comment/deleteComment/${commentIdToDelete}`,
-        {
-          method: 'DELETE',
-        }
-      );
+      const res = await fetch(`/api/comment/deleteComment/${commentIdToDelete}`, { method: 'DELETE' });
       const data = await res.json();
       if (res.ok) {
-        setComments((prev) =>
-          prev.filter((comment) => comment._id !== commentIdToDelete)
-        );
+        setComments((prev) => prev.filter((comment) => comment._id !== commentIdToDelete));
         setShowModal(false);
       } else {
         console.log(data.message);
@@ -84,9 +77,9 @@ export default function DashComments() {
               <Table.HeadCell>ID de Usuario</Table.HeadCell>
               <Table.HeadCell>Eliminar</Table.HeadCell>
             </Table.Head>
-            {comments.map((comment) => (
-              <Table.Body className='divide-y' key={comment._id}>
-                <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
+            <Table.Body className='divide-y'>
+              {comments.map((comment) => (
+                <Table.Row key={comment._id} className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                   <Table.Cell>
                     {new Date(comment.createdAt).toLocaleDateString()}
                   </Table.Cell>
@@ -106,15 +99,15 @@ export default function DashComments() {
                     </span>
                   </Table.Cell>
                 </Table.Row>
-              </Table.Body>
-            ))}
+              ))}
+            </Table.Body>
           </Table>
           {showMore && (
             <button
               onClick={handleShowMore}
               className='w-full text-teal-500 self-center text-sm py-7'
             >
-              Ver Mas
+              Ver Más
             </button>
           )}
         </>
@@ -132,14 +125,14 @@ export default function DashComments() {
           <div className='text-center'>
             <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
             <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
-              Seguro que quiere eliminar este comentario?
+              ¿Seguro que quiere eliminar este comentario?
             </h3>
             <div className='flex justify-center gap-4'>
               <Button color='failure' onClick={handleDeleteComment}>
-                Si, estoy seguro.
+                Sí, estoy seguro.
               </Button>
               <Button color='gray' onClick={() => setShowModal(false)}>
-                No, cancel
+                No, cancelar
               </Button>
             </div>
           </div>

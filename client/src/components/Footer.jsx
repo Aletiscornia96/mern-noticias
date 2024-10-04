@@ -36,7 +36,7 @@ export default function FooterComponent() {
                         <div>
                             <Footer.Title title='Follow Us' />
                             <Footer.LinkGroup col>
-                                <Footer.Link href="https://www.instagram.com" target ='_blank' rel='nooperner noreferrer'>
+                                <Footer.Link href="https://www.instagram.com/elfunensehoy/" target ='_blank' rel='nooperner noreferrer'>
                                     Instagram
                                 </Footer.Link>
                                 <Footer.Link href="https://www.facebook.com" target ='_blank' rel='nooperner noreferrer'>
