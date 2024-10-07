@@ -82,6 +82,7 @@ export default function DashProfile() {
         setImageFile(null);
         setImageFileUrl(null);
         setImageFileUploading(false);
+        console.log(error)
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
