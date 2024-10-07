@@ -104,7 +104,7 @@ export default function CreatePost() {
               setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value='Sin Categoria'>Seleccione una categoria</option>
+            <option value='sincategoria'>Seleccione una categoria</option>
             <option value='Ciudad'>Ciudad</option>
             <option value='Cultura'>Cultura</option>
             <option value='Deporte'>Deporte</option>

@@ -1,18 +1,30 @@
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import PostCard from '../components/PostCard';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [showMore, setShowMore] = useState(true);
+  const [startIndex, setStartIndex] = useState(0);
+  const limit = 9;
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch('/api/post/getPosts');
+      const res = await fetch(`/api/post/getPosts?limit=${limit}&startIndex=${startIndex}`);
       const data = await res.json();
-      setPosts(data.posts);
+      setPosts(prevPosts => [...prevPosts, ...data.posts]); // Añadir nuevos posts al estado
+
+      // Si el número de posts devueltos es menor que el límite, ocultar el botón "Ver Más"
+      if (data.posts.length < limit) {
+        setShowMore(false);
+      }
     };
+
     fetchPosts();
-  }, []);
+  }, [startIndex]); // Dependemos de `startIndex` para volver a cargar los posts
+
+  const handleShowMore = () => {
+    setStartIndex(prevStartIndex => prevStartIndex + limit); // Aumentar el startIndex para cargar más posts
+  };
 
   return (
     <div>
@@ -24,9 +36,8 @@ export default function Home() {
       </div>
 
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7'>
-        {posts && posts.length > 0 && (
+        {posts.length > 0 && (
           <div className='flex flex-col gap-6'>
-            {/* <h2 className='text-2xl font-semibold text-center'>Noticias recientes</h2> */}
             <div className='flex flex-wrap justify-between'>
               {posts.map((post) => (
                 <div className='w-full sm:w-1/2 lg:w-1/3 p-2' key={post._id}>
@@ -34,16 +45,12 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <Link
-              to={'/search'}
-              className='text-lg text-teal-500 hover:underline text-center'
-            >
-              Ver más
-            </Link>
+            {showMore && (
+              <button onClick={handleShowMore} className='w-full text-teal-500 self-center text-sm py-7'>Ver Más</button>
+            )}
           </div>
         )}
       </div>
     </div>
   );
 }
-

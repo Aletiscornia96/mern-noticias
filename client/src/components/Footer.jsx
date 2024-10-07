@@ -23,7 +23,7 @@ export default function FooterComponent() {
                     </div>
                     <div className='grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6'>
                         <div>
-                            <Footer.Title title='About' />
+                            {/* <Footer.Title title='About' />
                             <Footer.LinkGroup col>
                                 <Footer.Link href="https://www.google.com" target ='_blank' rel='nooperner noreferrer'>
                                     Google
@@ -31,7 +31,7 @@ export default function FooterComponent() {
                                 <Footer.Link href="https://www.youtube.com" target ='_blank' rel='nooperner noreferrer'>
                                     YouTube
                                 </Footer.Link>
-                            </Footer.LinkGroup>
+                            </Footer.LinkGroup> */}
                         </div>
                         <div>
                             <Footer.Title title='Follow Us' />
@@ -47,10 +47,10 @@ export default function FooterComponent() {
                         <div>
                             <Footer.Title title='Legal' />
                             <Footer.LinkGroup col>
-                                <Footer.Link href="#" target ='_blank' rel='nooperner noreferrer'>
+                                <Footer.Link href="/privacy" target ='_blank' rel='nooperner noreferrer'>
                                     Politicas de Privacidad
                                 </Footer.Link>
-                                <Footer.Link href="#" target ='_blank' rel='nooperner noreferrer'>
+                                <Footer.Link href="/terms" target ='_blank' rel='nooperner noreferrer'>
                                     Terminos y Condiciones
                                 </Footer.Link>
                             </Footer.LinkGroup>
@@ -62,7 +62,7 @@ export default function FooterComponent() {
                     <Footer.Copyright href='#' by="Alejandro Tiscornia" year={new Date().getFullYear()}/>
                     <div className='flex gap-6 sm:mt-0 mt-4 sm:justify-center'>
                         <Footer.Icon href='#' icon={BsFacebook}/>
-                        <Footer.Icon href='#' icon={BsInstagram}/>
+                        <Footer.Icon href='https://www.instagram.com/elfunensehoy/' icon={BsInstagram}/>
                         <Footer.Icon href='#' icon={BsTwitter}/>
                         <Footer.Icon href='#' icon={BsYoutube}/>
                     </div>

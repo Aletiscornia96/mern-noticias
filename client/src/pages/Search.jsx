@@ -7,97 +7,67 @@ export default function Search() {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
     sort: 'desc',
-    category: 'uncategorized',
+    category: 'sincategoria',
   });
 
-  console.log(sidebarData);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   const location = useLocation();
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    const sortFromUrl = urlParams.get('sort');
-    const categoryFromUrl = urlParams.get('category');
-    if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
-      setSidebarData({
-        ...sidebarData,
-        searchTerm: searchTermFromUrl,
-        sort: sortFromUrl,
-        category: categoryFromUrl,
-      });
-    }
+    const searchTermFromUrl = urlParams.get('searchTerm') || '';
+    const sortFromUrl = urlParams.get('sort') || 'desc';
+    const categoryFromUrl = urlParams.get('category') || 'sincategoria';
+
+    setSidebarData({
+      searchTerm: searchTermFromUrl,
+      sort: sortFromUrl,
+      category: categoryFromUrl,
+    });
 
     const fetchPosts = async () => {
       setLoading(true);
-      const searchQuery = urlParams.toString();
-      const res = await fetch(`/api/post/getposts?${searchQuery}`);
+      const res = await fetch(`/api/post/getposts?${urlParams}`);
       if (!res.ok) {
         setLoading(false);
         return;
       }
-      if (res.ok) {
-        const data = await res.json();
-        setPosts(data.posts);
-        setLoading(false);
-        if (data.posts.length === 9) {
-          setShowMore(true);
-        } else {
-          setShowMore(false);
-        }
-      }
+      const data = await res.json();
+      setPosts(data.posts);
+      setLoading(false);
+      setShowMore(data.posts.length === 9);
     };
+
     fetchPosts();
   }, [location.search]);
 
   const handleChange = (e) => {
-    if (e.target.id === 'searchTerm') {
-      setSidebarData({ ...sidebarData, searchTerm: e.target.value });
-    }
-    if (e.target.id === 'sort') {
-      const order = e.target.value || 'desc';
-      setSidebarData({ ...sidebarData, sort: order });
-    }
-    if (e.target.id === 'category') {
-      const category = e.target.value || 'uncategorized';
-      setSidebarData({ ...sidebarData, category });
-    }
+    setSidebarData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const urlParams = new URLSearchParams(location.search);
-    urlParams.set('searchTerm', sidebarData.searchTerm);
-    urlParams.set('sort', sidebarData.sort);
-    urlParams.set('category', sidebarData.category);
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
+    const urlParams = new URLSearchParams(sidebarData);
+    navigate(`/search?${urlParams.toString()}`);
   };
 
   const handleShowMore = async () => {
-    const numberOfPosts = posts.length;
-    const startIndex = numberOfPosts;
+    const startIndex = posts.length;
     const urlParams = new URLSearchParams(location.search);
     urlParams.set('startIndex', startIndex);
-    const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/post/getposts?${searchQuery}`);
-    if (!res.ok) {
-      return;
-    }
-    if (res.ok) {
-      const data = await res.json();
-      setPosts([...posts, ...data.posts]);
-      if (data.posts.length === 9) {
-        setShowMore(true);
-      } else {
-        setShowMore(false);
-      }
-    }
+    const res = await fetch(`/api/post/getposts?${urlParams}`);
+    if (!res.ok) return;
+
+    const data = await res.json();
+    setPosts((prev) => [...prev, ...data.posts]);
+    setShowMore(data.posts.length === 9);
   };
 
   return (
@@ -130,17 +100,17 @@ export default function Search() {
               value={sidebarData.category}
               id='category'
             >
-            <option value='Sin Categoria'>Seleccione una categoria</option>
-            <option value='Ciudad'>Ciudad</option>
-            <option value='Cultura'>Cultura</option>
-            <option value='Deporte'>Deporte</option>
-            <option value='Economia'>Economia</option>
-            <option value='Espectaculo'>Espectaculo</option>
-            <option value='Pais'>Pais</option>
-            <option value='Region'>Region</option>
-            <option value='Social'>Social</option>
-            <option value='Tiempo'>Tiempo</option>
-            <option value='Urgente'>Urgente</option>
+              <option value='sincategoria'>Seleccione una categoria</option>
+              <option value='Ciudad'>Ciudad</option>
+              <option value='Cultura'>Cultura</option>
+              <option value='Deporte'>Deporte</option>
+              <option value='Economia'>Economia</option>
+              <option value='Espectaculo'>Espectaculo</option>
+              <option value='Pais'>Pais</option>
+              <option value='Region'>Region</option>
+              <option value='Social'>Social</option>
+              <option value='Tiempo'>Tiempo</option>
+              <option value='Urgente'>Urgente</option>
             </Select>
           </div>
           <Button type='submit' outline gradientDuoTone='purpleToPink'>
@@ -150,11 +120,11 @@ export default function Search() {
       </div>
       <div className='w-full'>
         <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 '>
-         Resultados:
+          Resultado:
         </h1>
         <div className='p-7 flex flex-wrap gap-4'>
           {!loading && posts.length === 0 && (
-            <p className='text-xl text-gray-500'>No se encontraron noticias.</p>
+            <p className='text-xl text-gray-500'>Noticia no encontrada.</p>
           )}
           {loading && <p className='text-xl text-gray-500'>Cargando...</p>}
           {!loading &&
