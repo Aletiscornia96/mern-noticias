@@ -100,7 +100,7 @@ export default function Search() {
               value={sidebarData.category}
               id='category'
             >
-              <option value='sincategoria'>Seleccione una categoria</option>
+              {/* <option value='sincategoria'>Seleccione una categoria</option> */}
               <option value='Ciudad'>Ciudad</option>
               <option value='Cultura'>Cultura</option>
               <option value='Deporte'>Deporte</option>

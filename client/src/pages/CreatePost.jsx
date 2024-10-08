@@ -61,6 +61,11 @@ export default function CreatePost() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+     // Validación de categoría
+    if (!formData.category || formData.category === 'sincategoria') {
+      setPublishError('Por favor, seleccione una categoría válida.');
+      return;
+  }
     try {
       const res = await fetch('/api/post/create', {
         method: 'POST',
@@ -104,6 +109,7 @@ export default function CreatePost() {
               setFormData({ ...formData, category: e.target.value })
             }
           >
+            <label htmlFor=""></label>
             <option value='sincategoria'>Seleccione una categoria</option>
             <option value='Ciudad'>Ciudad</option>
             <option value='Cultura'>Cultura</option>
