@@ -69,7 +69,7 @@ export default function Header() {
                     rightIcon={AiOutlineSearch}
                     className="hidden lg:inline"
                     value={searchTerms}
-                    onChange={(e) => setSearchTerms(e.target.value)}
+                    onC hange={(e) => setSearchTerms(e.target.value)}
                 />
             </form>
             <Button className='w-12 h-10 lg:hidden' color='gray' pill>

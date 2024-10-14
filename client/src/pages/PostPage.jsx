@@ -82,7 +82,7 @@ export default function PostPage() {
     <div className='flex justify-center gap-4 mt-5'>
         {recentPosts && 
             recentPosts.map((post) => (
-                <div className='w-1/3 sm:w-1/4' key={post._id}>
+                <div  key={post._id}>
                     <PostCard post={post} />
                 </div>
             ))
