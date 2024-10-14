@@ -1,4 +1,5 @@
 # PARA PODER INICIAR LA APP
+Descargar e instalar NodeJs.
 Para poder iniciar la app debemos crear en la carpeta noticias un archivo de nombre .env con 3 valiables:
 ```
 > MONGO_URL
