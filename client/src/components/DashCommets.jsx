@@ -73,8 +73,8 @@ export default function DashComments() {
               <Table.HeadCell>Fecha de Creacion</Table.HeadCell>
               <Table.HeadCell>Comentario</Table.HeadCell>
               <Table.HeadCell>Numero de likes</Table.HeadCell>
-              <Table.HeadCell>ID de Noticia</Table.HeadCell>
-              <Table.HeadCell>ID de Usuario</Table.HeadCell>
+              <Table.HeadCell>Titulo de la Noticia</Table.HeadCell>
+              <Table.HeadCell>Nombre Usuario</Table.HeadCell>
               <Table.HeadCell>Eliminar</Table.HeadCell>
             </Table.Head>
             <Table.Body className='divide-y'>
@@ -85,8 +85,8 @@ export default function DashComments() {
                   </Table.Cell>
                   <Table.Cell>{comment.content}</Table.Cell>
                   <Table.Cell>{comment.numberOfLikes}</Table.Cell>
-                  <Table.Cell>{comment.postId}</Table.Cell>
-                  <Table.Cell>{comment.userId}</Table.Cell>
+                  <Table.Cell>{comment.postId?.title}</Table.Cell>
+                  <Table.Cell>{comment.userId?.username}</Table.Cell>
                   <Table.Cell>
                     <span
                       onClick={() => {

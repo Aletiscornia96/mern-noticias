@@ -6,7 +6,7 @@ import PostCard from '../components/PostCard';
 export default function Search() {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
-    sort: 'desc',
+    order: 'desc',
     category: 'sincategoria',
   });
 
@@ -20,13 +20,13 @@ export default function Search() {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get('searchTerm') || '';
-    const sortFromUrl = urlParams.get('sort') || 'desc';
-    const categoryFromUrl = urlParams.get('category') || 'sincategoria';
+    const sortFromUrl = urlParams.get('order') || 'desc';
+    // const categoryFromUrl = urlParams.get('category') || 'sincategoria';
 
     setSidebarData({
       searchTerm: searchTermFromUrl,
-      sort: sortFromUrl,
-      category: categoryFromUrl,
+      order: sortFromUrl,
+      // category: categoryFromUrl,
     });
 
     const fetchPosts = async () => {
@@ -79,7 +79,7 @@ export default function Search() {
               Buscar:
             </label>
             <TextInput
-              placeholder='Search...'
+              placeholder='Buscar...'
               id='searchTerm'
               type='text'
               value={sidebarData.searchTerm}
@@ -88,19 +88,19 @@ export default function Search() {
           </div>
           <div className='flex items-center gap-2'>
             <label className='font-semibold'>Ordenar por:</label>
-            <Select onChange={handleChange} value={sidebarData.sort} id='sort'>
+            <Select onChange={handleChange} value={sidebarData.order} id='order'>
               <option value='desc'>Mas reciente</option>
               <option value='asc'>Mas antiguo</option>
             </Select>
           </div>
-          <div className='flex items-center gap-2'>
+          {/* <div className='flex items-center gap-2'>
             <label className='font-semibold'>Categoria:</label>
             <Select
               onChange={handleChange}
               value={sidebarData.category}
               id='category'
             >
-              {/* <option value='sincategoria'>Seleccione una categoria</option> */}
+              <option value='sincategoria'>Seleccione una categoria</option>
               <option value='Ciudad'>Ciudad</option>
               <option value='Cultura'>Cultura</option>
               <option value='Deporte'>Deporte</option>
@@ -112,7 +112,7 @@ export default function Search() {
               <option value='Tiempo'>Tiempo</option>
               <option value='Urgente'>Urgente</option>
             </Select>
-          </div>
+          </div> */}
           <Button type='submit' outline gradientDuoTone='purpleToPink'>
             Aplicar filtros
           </Button>

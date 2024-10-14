@@ -6,12 +6,14 @@ const commentSchema = new mongoose.Schema({
         required: true,
     },
     postId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post', // Apunta al modelo 'Post'
         required: true,
     },
     userId: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Apunta al modelo 'User'
+        required: true,
     },
     likes: {
         type: Array,
