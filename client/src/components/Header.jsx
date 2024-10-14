@@ -110,7 +110,7 @@ export default function Header() {
                         </Button>
                     </Link>
                 )}
-                <Navbar.Toggle />
+                {/* <Navbar.Toggle /> */}
             </div>
         </Navbar>
     );
