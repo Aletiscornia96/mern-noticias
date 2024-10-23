@@ -122,7 +122,7 @@ export default function Search() {
         <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 '>
           Resultado:
         </h1>
-        <div className='p-7 flex flex-wrap gap-4'>
+        <div className='p-7 flex flex-wrap justify-between w-full p-2'>
           {!loading && posts.length === 0 && (
             <p className='text-xl text-gray-500'>Noticia no encontrada.</p>
           )}
@@ -133,7 +133,7 @@ export default function Search() {
           {showMore && (
             <button
               onClick={handleShowMore}
-              className='text-teal-500 text-lg hover:underline p-7 w-full'
+              className='text-teal-500 text-lg hover:underline p-7 w-full '
             >
               Ver Mas
             </button>
