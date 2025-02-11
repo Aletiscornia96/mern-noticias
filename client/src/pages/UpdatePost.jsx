@@ -144,6 +144,7 @@ export default function UpdatePost() {
                         <option value='Espectaculo'>Espectaculo</option>
                         <option value='Pais'>Pais</option>
                         <option value='Region'>Region</option>
+                        <option value='Salud'>Salud</option>
                         <option value='Social'>Social</option>
                         <option value='Tiempo'>Tiempo</option>
                         <option value='Urgente'>Urgente</option>

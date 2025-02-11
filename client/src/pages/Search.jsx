@@ -93,26 +93,6 @@ export default function Search() {
               <option value='asc'>Mas antiguo</option>
             </Select>
           </div>
-          {/* <div className='flex items-center gap-2'>
-            <label className='font-semibold'>Categoria:</label>
-            <Select
-              onChange={handleChange}
-              value={sidebarData.category}
-              id='category'
-            >
-              <option value='sincategoria'>Seleccione una categoria</option>
-              <option value='Ciudad'>Ciudad</option>
-              <option value='Cultura'>Cultura</option>
-              <option value='Deporte'>Deporte</option>
-              <option value='Economia'>Economia</option>
-              <option value='Espectaculo'>Espectaculo</option>
-              <option value='Pais'>Pais</option>
-              <option value='Region'>Region</option>
-              <option value='Social'>Social</option>
-              <option value='Tiempo'>Tiempo</option>
-              <option value='Urgente'>Urgente</option>
-            </Select>
-          </div> */}
           <Button type='submit' outline gradientDuoTone='purpleToPink'>
             Aplicar filtros
           </Button>
@@ -122,22 +102,28 @@ export default function Search() {
         <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 '>
           Resultado:
         </h1>
-        <div className='p-7 flex flex-wrap justify-between w-full p-2'>
+        <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7'>
           {!loading && posts.length === 0 && (
             <p className='text-xl text-gray-500'>Noticia no encontrada.</p>
           )}
           {loading && <p className='text-xl text-gray-500'>Cargando...</p>}
-          {!loading &&
-            posts &&
-            posts.map((post) => <PostCard key={post._id} post={post} />)}
-          {showMore && (
-            <button
-              onClick={handleShowMore}
-              className='text-teal-500 text-lg hover:underline p-7 w-full '
-            >
-              Ver Mas
-            </button>
-          )}
+          <div className='flex flex-col gap-6'>
+            <div className='flex flex-wrap justify-between'>
+              {!loading &&
+                posts &&
+                posts.map((post) => (<div className='w-full sm:w-1/2 lg:w-1/2 p-2' key={post._id}>
+                  <PostCard post={post} />
+                </div>))}
+            </div>
+            {showMore && (
+              <button
+                onClick={handleShowMore}
+                className='text-teal-500 text-lg hover:underline p-7 w-full '
+              >
+                Ver Mas
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

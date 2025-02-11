@@ -2,12 +2,12 @@ import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {
-    getDownloadURL,
-    getStorage,
-    ref,
-    uploadBytesResumable,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
 } from 'firebase/storage';
-import  {app}  from '../firebase';
+import { app } from '../firebase';
 import { useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -41,7 +41,7 @@ export default function CreatePost() {
           setImageUploadProgress(progress.toFixed(0));
         },
         (error) => {
-            console.log(error)
+          console.log(error)
           setImageUploadError('Fallo al subir la imagen');
           setImageUploadProgress(null);
         },
@@ -61,11 +61,11 @@ export default function CreatePost() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-     // Validación de categoría
+    // Validación de categoría
     if (!formData.category || formData.category === 'sincategoria') {
       setPublishError('Por favor, seleccione una categoría válida.');
       return;
-  }
+    }
     try {
       const res = await fetch('/api/post/create', {
         method: 'POST',
@@ -85,7 +85,7 @@ export default function CreatePost() {
         navigate(`/post/${data.slug}`);
       }
     } catch (error) {
-        console.log(error)
+      console.log(error)
       setPublishError('Something went wrong');
     }
   };
@@ -118,6 +118,7 @@ export default function CreatePost() {
             <option value='Espectaculo'>Espectaculo</option>
             <option value='Pais'>Pais</option>
             <option value='Region'>Region</option>
+            <option value='Salud'>Salud</option>
             <option value='Social'>Social</option>
             <option value='Tiempo'>Tiempo</option>
             <option value='Urgente'>Urgente</option>
